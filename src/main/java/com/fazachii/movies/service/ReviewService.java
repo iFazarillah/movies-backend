@@ -1,14 +1,13 @@
 package com.fazachii.movies.service;
 
-import com.fazachii.movies.model.Movies;
 import com.fazachii.movies.model.Review;
 import com.fazachii.movies.repository.ReviewRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
@@ -19,7 +18,7 @@ public class ReviewService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public Review createReview(String reviewBody, String imdbId){
+    public Review createReview(String reviewBody, String imdbId) {
 
         Review review = new Review();
         review.setBody(reviewBody);
@@ -29,5 +28,15 @@ public class ReviewService {
 
         return review;
 
+    }
+
+    public List<Review> getAllReview(String imdbId) {
+
+        return reviewRepository.findByImdbId(imdbId);
+    }
+
+    public Optional<Review> getReviewById(String id) {
+
+        return reviewRepository.findById(id);
     }
 }
